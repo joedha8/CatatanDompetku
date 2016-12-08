@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home48"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_masuk"
+            android:icon="@drawable/installingupdatesfilled50"
+            android:title="Pemasukkan" />
+        <item
+            android:id="@+id/nav_keluar"
+            android:icon="@drawable/uninstallingupdatesfilled50"
+            android:title="Pengeluaran" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_tentang"
+                android:icon="@drawable/info52"
+                android:title="Tentang kami" />
+        </menu>
+    </item>
+
+</menu>
