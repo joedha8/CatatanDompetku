@@ -20,6 +20,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.rackspira.catatandompetku.database.AliranUang;
+
 public class MenuUtama extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     AliranUang dbuang;
@@ -37,11 +39,11 @@ public class MenuUtama extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        in=(TextView)findViewById(R.id.in);
-        out=(TextView)findViewById(R.id.out);
-        tot=(TextView)findViewById(R.id.tot);
-        mu=this;
-        dbuang=new AliranUang(this);
+        in = (TextView) findViewById(R.id.in);
+        out = (TextView) findViewById(R.id.out);
+        tot = (TextView) findViewById(R.id.tot);
+        mu = this;
+        dbuang = new AliranUang(this);
         RefreshList();
 
         in.setText("100");
@@ -90,6 +92,12 @@ public class MenuUtama extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        RefreshList();
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -97,23 +105,19 @@ public class MenuUtama extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            Intent intent=new Intent(MenuUtama.this, MenuUtama.class);
+            Intent intent = new Intent(MenuUtama.this, MenuUtama.class);
             startActivity(intent);
-        }
-        else if (id == R.id.nav_masuk) {
-            Intent intent=new Intent(MenuUtama.this, BuatData.class);
+        } else if (id == R.id.nav_masuk) {
+            Intent intent = new Intent(MenuUtama.this, BuatData.class);
             startActivity(intent);
             //d=0;
-        }
-        else if (id == R.id.nav_keluar) {
-            Intent intent=new Intent(MenuUtama.this, BuatData.class);
+        } else if (id == R.id.nav_keluar) {
+            Intent intent = new Intent(MenuUtama.this, BuatData.class);
             startActivity(intent);
             //d=1;
-        }
-        else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_share) {
 
-        }
-        else if (id == R.id.nav_tentang) {
+        } else if (id == R.id.nav_tentang) {
 
         }
 
@@ -121,9 +125,10 @@ public class MenuUtama extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void RefreshList(){
+
+    public void RefreshList() {
         SQLiteDatabase db = dbuang.getReadableDatabase();
-        cursor = db.rawQuery("SELECT * FROM masukkan",null);
+        cursor = db.rawQuery("SELECT * FROM masukkan", null);
         daftar = new String[cursor.getCount()];
         /*if(d==0){
             masuk=new String[cursor.getCount()];
@@ -132,11 +137,11 @@ public class MenuUtama extends AppCompatActivity
             keluar=new String[cursor.getCount()];
         }*/
         cursor.moveToFirst();
-        for (int cc=0; cc < cursor.getCount(); cc++){
+        for (int cc = 0; cc < cursor.getCount(); cc++) {
             cursor.moveToPosition(cc);
             daftar[cc] = cursor.getString(0).toString();
         }
-        ListView01 = (ListView)findViewById(R.id.listView1);
+        ListView01 = (ListView) findViewById(R.id.listView1);
         ListView01.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, daftar));
         ListView01.setSelected(true);
         ListView01.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -147,18 +152,18 @@ public class MenuUtama extends AppCompatActivity
                 builder.setTitle("Pilihan");
                 builder.setItems(dialogitem, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
-                        switch(item){
-                            case 0 :
+                        switch (item) {
+                            case 0:
                                 Intent i = new Intent(getApplicationContext(), LihatData.class);
                                 i.putExtra("keterangan", selection);
                                 startActivity(i);
                                 break;
-                            case 1 :
+                            case 1:
                                 Intent in = new Intent(getApplicationContext(), EditData.class);
                                 in.putExtra("keterangan", selection);
                                 startActivity(in);
                                 break;
-                            case 2 :
+                            case 2:
                                 SQLiteDatabase db = dbuang.getWritableDatabase();
                                 db.execSQL("delete from masukkan");
                                 RefreshList();
@@ -167,8 +172,9 @@ public class MenuUtama extends AppCompatActivity
                     }
                 });
                 builder.create().show();
-            }});
-        ((ArrayAdapter)ListView01.getAdapter()).notifyDataSetInvalidated();
+            }
+        });
+        ((ArrayAdapter) ListView01.getAdapter()).notifyDataSetInvalidated();
     }
     /*public void hitung(){
         int masuk, keluar, jumlah;

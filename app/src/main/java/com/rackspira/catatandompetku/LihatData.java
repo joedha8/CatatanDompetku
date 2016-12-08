@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.rackspira.catatandompetku.database.AliranUang;
+
 public class LihatData extends AppCompatActivity {
     AliranUang dbmasuk;
     Button save;

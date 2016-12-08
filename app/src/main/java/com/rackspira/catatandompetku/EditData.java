@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.rackspira.catatandompetku.database.AliranUang;
+
 public class EditData extends AppCompatActivity {
     AliranUang dbmasuk;
     Button save;

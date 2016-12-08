@@ -1,4 +1,4 @@
-package com.rackspira.catatandompetku;
+package com.rackspira.catatandompetku.database;
 
 /**
  * Created by YUDHA on 16/11/2016.
