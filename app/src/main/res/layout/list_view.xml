@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/card_view"
+    android:clickable="true"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="16dp"
+    android:foreground="?attr/selectableItemBackground">
+<RelativeLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:id="@+id/simbol"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/simbol"
+        android:text="Pengeluaran"
+        android:id="@+id/keterangan1"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/nominal"
+        android:text="angka"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/simbol"
+        android:layout_toEndOf="@+id/simbol"
+        android:layout_marginTop="12dp" />
+</RelativeLayout>
+    </android.support.v7.widget.CardView>

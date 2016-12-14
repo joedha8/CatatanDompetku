@@ -24,11 +24,14 @@ public class AliranUang extends SQLiteOpenHelper {
         String sql = "create table masukkan(keterangan text null, masuk integer);";
         Log.d("Data", "onCreate: " + sql);
         db.execSQL(sql);
+
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
         // TODO Auto-generated method stub
     }
+
 
 }

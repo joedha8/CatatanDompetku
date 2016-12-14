@@ -11,6 +11,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,17 +22,21 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.rackspira.catatandompetku.adapter.RecyclerAdapter;
 import com.rackspira.catatandompetku.database.AliranUang;
 
 public class MenuUtama extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     AliranUang dbuang;
-    protected Cursor cursor, x, y;
-    String[] daftar, masuk, keluar;
-    ListView ListView01;
+  //  protected Cursor cursor, x, y;
+    //String[] daftar, masuk, keluar;
+
     public static MenuUtama mu;
     public TextView in, out, tot;
+
+    public RecyclerView rview;
     //public int a=100, b=200, c, d;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +50,15 @@ public class MenuUtama extends AppCompatActivity
         tot = (TextView) findViewById(R.id.tot);
         mu = this;
         dbuang = new AliranUang(this);
-        RefreshList();
+
+           // RefreshList();
 
         in.setText("100");
-        out.setText("200");
+        out.setText("400");
         //tot.setText(c);
+
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -96,6 +106,7 @@ public class MenuUtama extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         RefreshList();
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -127,77 +138,11 @@ public class MenuUtama extends AppCompatActivity
     }
 
     public void RefreshList() {
-        SQLiteDatabase db = dbuang.getReadableDatabase();
-        cursor = db.rawQuery("SELECT * FROM masukkan", null);
-        daftar = new String[cursor.getCount()];
-        /*if(d==0){
-            masuk=new String[cursor.getCount()];
-        }
-        else if(d==1){
-            keluar=new String[cursor.getCount()];
-        }*/
-        cursor.moveToFirst();
-        for (int cc = 0; cc < cursor.getCount(); cc++) {
-            cursor.moveToPosition(cc);
-            daftar[cc] = cursor.getString(0).toString();
-        }
-        ListView01 = (ListView) findViewById(R.id.listView1);
-        ListView01.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, daftar));
-        ListView01.setSelected(true);
-        ListView01.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView arg0, View arg1, int arg2, long arg3) {
-                final String selection = daftar[arg2]; //.getItemAtPosition(arg2).toString();
-                final CharSequence[] dialogitem = {"Lihat", "Edit", "Hapus"};
-                AlertDialog.Builder builder = new AlertDialog.Builder(MenuUtama.this);
-                builder.setTitle("Pilihan");
-                builder.setItems(dialogitem, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        switch (item) {
-                            case 0:
-                                Intent i = new Intent(getApplicationContext(), LihatData.class);
-                                i.putExtra("keterangan", selection);
-                                startActivity(i);
-                                break;
-                            case 1:
-                                Intent in = new Intent(getApplicationContext(), EditData.class);
-                                in.putExtra("keterangan", selection);
-                                startActivity(in);
-                                break;
-                            case 2:
-                                SQLiteDatabase db = dbuang.getWritableDatabase();
-                                db.execSQL("delete from masukkan");
-                                RefreshList();
-                                break;
-                        }
-                    }
-                });
-                builder.create().show();
-            }
-        });
-        ((ArrayAdapter) ListView01.getAdapter()).notifyDataSetInvalidated();
-    }
-    /*public void hitung(){
-        int masuk, keluar, jumlah;
-        masuk=a;
-        keluar=b;
-        jumlah=masuk-keluar;
-        c=jumlah;
-    }
+        rview = (RecyclerView) findViewById(R.id.listView);
+        RecyclerAdapter adapter = new RecyclerAdapter(this);
+        rview.setAdapter(adapter);
+        rview.setHasFixedSize(true);
+        rview.setLayoutManager(new LinearLayoutManager(this));
 
-    public void pilih(){
-        int yati;
-        yati=d;
-        if(yati==0){
-            SQLiteDatabase db = dbuang.getReadableDatabase();
-            x=db.rawQuery("SELECT masuk from masukkan",null);
-            a=x.getCount();
-            x.moveToFirst();
-        }
-        else if(yati==1){
-            SQLiteDatabase db = dbuang.getReadableDatabase();
-            y=db.rawQuery("SELECT masuk from masukkan",null);
-            b=y.getCount();
-            y.moveToFirst();
-        }
-    }*/
+    }
 }
